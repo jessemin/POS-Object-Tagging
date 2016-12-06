@@ -8,6 +8,8 @@ from fileUtil import *
 from collections import defaultdict
 import datetime
 import heapq
+import os
+import csv
 
 
 class PosTagger:
@@ -82,3 +84,29 @@ class PosTagger:
 
     def __str__(self):
         return 'Tagger created at: {}\nPrepositions: {}'.format(self.datetime, self.prepDict)
+
+totalDict = {}
+dataFiles = ['./data/'+filename for filename in os.listdir('./data') if filename.startswith("2016")]
+for dataFile in dataFiles:
+    print "Processing {}...".format(dataFile)
+    tempDict, _ = PosTagger(dataFile).run()
+    for key, val in tempDict.iteritems():
+        if key.lower() in totalDict:
+            totalDict[key.lower()] += val
+        else:
+            totalDict[key.lower()] = val
+print "\nEntire Prepositions"
+print totalDict
+print "\n===================================================="
+print "\nTop 10 Prepositions"
+print heapq.nlargest(10, totalDict, key=totalDict.get)
+
+arrayofdata = []
+for key, val in totalDict.iteritems():
+    arrayofdata.append([key, key, val])
+
+with open('./bubble/data/psych204.csv', 'w') as mycsvfile:
+    thedatawriter = csv.writer(mycsvfile)
+    thedatawriter.writerow(["name","word","count"])
+    for row in arrayofdata:
+        thedatawriter.writerow(row)

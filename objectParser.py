@@ -69,7 +69,8 @@ class ObjectParser:
 o = ObjectParser()
 o.setServer(8080)
 
-sampleSentence1 = "Lily is near the fountain next the mall in the red plaza."
+sampleSentence1 = "near the plaza"
+#sampleSentence1 = "Lily is near the fountain next the mall in the red plaza."
 sampleSentence2 = "A gold lily grew in the red quarter."
 
 #sample case 1
