@@ -10,6 +10,7 @@ import datetime
 import heapq
 import os
 import csv
+import operator
 
 
 class PosTagger:
@@ -97,6 +98,8 @@ for dataFile in dataFiles:
             totalDict[key.lower()] = val
 print "\nEntire Prepositions"
 print totalDict
+sorted_x = sorted(totalDict.items(), key=operator.itemgetter(1))
+print sorted_x
 print "\n===================================================="
 print "\nTop 10 Prepositions"
 print heapq.nlargest(10, totalDict, key=totalDict.get)
